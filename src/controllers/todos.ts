@@ -31,5 +31,12 @@ export const updateTodo: RequestHandler<{ id: string }> = (req, res) => {
 
 export const deleteTodo: RequestHandler<{ id: string }> = (req, res) => {
   const todoId = req.params.id
-  res.json({ todos: TODOS })
+
+  const todoIndex = TODOS.findIndex((todo) => todo.id === todoId)
+
+  if (todoIndex === -1) throw new Error('Could not find id')
+
+  TODOS.splice(todoIndex, 1)
+
+  res.json({ message: 'todo deleted' })
 }
